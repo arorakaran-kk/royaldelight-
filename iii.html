@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Delight - Online Restaurant</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            color: #222;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #ff5252;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ff6b6b;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(75, 74, 74, 0.7), rgba(75, 74, 74, 0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        /* Menu Section */
+        .menu-section {
+            background: white;
+        }
+        
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: #eee;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .menu-category {
+            display: none;
+        }
+        
+        .menu-category.active {
+            display: block;
+        }
+        
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .menu-item {
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .item-details {
+            padding: 20px;
+        }
+        
+        .item-details h3 {
+            font-size: 20px;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #ff6b6b;
+            font-size: 18px;
+        }
+        
+        /* Location Section */
+        .location {
+            background: #f1f1f1;
+        }
+        
+        .location-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .location-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .location-map {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background: #ddd;
+        }
+        
+        /* Reviews Section */
+        .reviews {
+            background: white;
+        }
+        
+        .review-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .review-card {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            width: 350px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .reviewer-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .reviewer-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .rating {
+            color: #ffc107;
+            margin: 5px 0;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #ff6b6b;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            
+            .hero-content p {
+                font-size: 18px;
+            }
+            
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Royal Delight</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#location">Location</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#" class="btn">Order Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Delicious Food That Changes Your Mood</h1>
+                <p>We Delight You With Our Best Dishes And Drinks </p>
+                <a href="#menu" class="btn">Explore Menu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu-section" id="menu">
+        <div class="container">
+            <h2 class="text-center">Our Menu</h2>
+            <p class="text-center">Discover our delicious offerings</p>
+            
+            <div class="menu-tabs">
+                <button class="tab-btn active" onclick="openMenuCategory('veg')">Vegetarian</button>
+                <button class="tab-btn" onclick="openMenuCategory('non-veg')">Non-Vegetarian</button>
+                <button class="tab-btn" onclick="openMenuCategory('drinks')">Drinks</button>
+                <button class="tab-btn" onclick="openMenuCategory('desserts')">Desserts</button>
+            </div>
+            
+            <!-- Vegetarian Menu -->
+            <div id="veg" class="menu-category active">
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-27 at 12.00.26 (1).jpeg" alt="shahi paneer">
+                        <div class="item-details">
+                            <h3>Shahi paneer</h3>
+                            <p>A rich creamy north indian curry made with smooth paneer</p>
+                            <p class="price">Rs.200</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-27 at 12.00.26.jpeg" alt="Chole bhature">
+                        <div class="item-details">
+                            <h3>chole bhature</h3>
+                            <p>Spicy, tangy chole and deep fried, fluffy bhature</p>
+                            <p class="price">Rs.250</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-27 at 12.01.57.jpeg" alt="Dal makhani">
+                        <div class="item-details">
+                            <h3>Dal makhani</h3>
+                            <p> creamy luxurious, texture and robust flavors,traditionally made with whole black lentils </p>
+                            <p class="price">Rs.300</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Non-Vegetarian Menu -->
+            <div id="non-veg" class="menu-category">
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-27 at 12.17.16.jpeg" alt="Butter Chicken">
+                        <div class="item-details">
+                            <h3>Butter Chicken</h3>
+                            <p>Marinated chicken cooked in a creamy, spiced tomato based sauce</p>
+                            <p class="price">Rs.500</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-27 at 12.17.19.jpeg" alt="Tandoori chicken">
+                        <div class="item-details">
+                            <h3>Tandoori chicken </h3>
+                            <p>Marinated in yogurt and spices, traditionally cooked in cylindrical clay</p>
+                            <p class="price">Rs.400</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-27 at 12.18.22.jpeg" alt="Tandoori fish">
+                        <div class="item-details">
+                            <h3>Tandoori fish</h3>
+                            <p>firm fleshed fish varieties, such as kingfish, tilapia or grouper</p>
+                            <p class="price">Rs.650</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Drinks Menu -->
+            <div id="drinks" class="menu-category">
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-28 at 17.51.09 (1).jpeg" alt="Fresh Juice">
+                        <div class="item-details">
+                            <h3>Fresh Juice</h3>
+                            <p>Orange, apple, or carrot juice (seasonal selection)</p>
+                            <p class="price">Rs.150</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-28 at 17.51.08.jpeg" alt="Smoothies">
+                        <div class="item-details">
+                            <h3>Smoothies</h3>
+                            <p>Berry blast, tropical mango, or green detox options</p>
+                            <p class="price">Rs.200</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-28 at 17.51.09.jpeg" alt="Craft Beer">
+                        <div class="item-details">
+                            <h3>Craft Beer</h3>
+                            <p>Selection of local and international craft beers</p>
+                            <p class="price">Rs.300</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Desserts Menu -->
+            <div id="desserts" class="menu-category">
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-28 at 17.52.05 (1).jpeg" alt="Chocolate Cake">
+                        <div class="item-details">
+                            <h3>Chocolate Cake</h3>
+                            <p>Rich chocolate cake with ganache and raspberry coulis</p>
+                            <p class="price">Rs.100</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-28 at 17.52.04.jpeg" alt="Cheesecake">
+                        <div class="item-details">
+                            <h3>Cheesecake</h3>
+                            <p>New York style cheesecake with berry topping</p>
+                            <p class="price">Rs.200</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="pic/WhatsApp Image 2025-06-28 at 17.52.05.jpeg" alt="Ice creram">
+                        <div class="item-details">
+                            <h3>Ice cream</h3>
+                            <p> a common dessert product that is produced through the pasteurization and homogenization of blended dairy products</p>
+                            <p class="price">Rs.100</p>
+                            <a href="#" class="btn">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location" id="location">
+        <div class="container">
+            <h2 class="text-center">Our Location</h2>
+            <p class="text-center">Visit us or order for delivery</p>
+            
+            <div class="location-content">
+                <div class="location-text">
+                    <h3>Find Us</h3>
+                    <p><strong>Address:</strong> 123 Food Street, Culinary District, NY 10001</p>
+                    <p><strong>Phone:</strong> (555) 123-4567</p>
+                    <p><strong>Email:</strong> info@royaldelight.com</p>
+                    <p><strong>Hours:</strong></p>
+                    <ul>
+                        <li>Monday-Friday: 11am - 10pm</li>
+                        <li>Saturday-Sunday: 10am - 11pm</li>
+                    </ul>
+                    <p>We offer dine-in, takeout, and delivery services through our partners.</p>
+                    <a href="#" class="btn">Get Directions</a>
+                </div>
+                
+                <div class="location-map">
+                    <!-- In a real website, you would embed a Google Map here -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215573291234!2d-73.9878449241644!3d40.74844097138979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2 class="text-center">Customer Reviews</h2>
+            <p class="text-center">What our customers say about us</p>
+            
+            <div class="review-container">
+                <div class="review-card">
+                    <div class="reviewer-info">
+                        <img src="pic/WhatsApp Image 2025-06-28 at 18.11.51.jpeg" alt="p">
+                        <div>
+                            <div class="reviewer-name">pardeep</div>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <p>"The Chole bhature was absolutely delicious! The flavors were perfectly balanced and the delivery was super fast. Will definitely order again!"</p>
+                </div>
+                
+                <div class="review-card">
+                    <div class="reviewer-info">
+                        <img src="pic/WhatsApp Image 2025-06-28 at 18.15.48.jpeg" alt="Michael ">
+                        <div>
+                            <div class="reviewer-name">Michael </div>
+                            <div class="rating">★★★★☆</div>
+                        </div>
+                    </div>
+                    <p>"Best Tandoori chicken I've had delivered. Cooked perfectly and arrived still warm. The cheesecake was also amazing. Highly recommend!"</p>
+                </div>
+                
+                <div class="review-card">
+                    <div class="reviewer-info">
+                        <img src="pic/WhatsApp Image 2025-06-28 at 18.20.52.jpeg" alt="Emily">
+                        <div>
+                            <div class="reviewer-name">Emily </div>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <p>"I order from Royal Delight at least twice a week. Consistent quality, great variety, and excellent customer service. My go-to for busy nights!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>Royal Delight brings restaurant-quality meals to your home. We use only the freshest ingredients to create delicious dishes you'll love.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#location">Location</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#">Order Now</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>123 Food Street, Culinary District</p>
+                    <p>NY 10001, United States</p>
+                    <p>Phone: (555) 123-4567</p>
+                    <p>Email: info@royaldelight.com</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Royal Delight. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality for menu categories
+        function openMenuCategory(categoryName) {
+            // Hide all menu categories
+            const categories = document.getElementsByClassName('menu-category');
+            for (let i = 0; i < categories.length; i++) {
+                categories[i].classList.remove('active');
+            }
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            // Show the selected category and activate its button
+            document.getElementById(categoryName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
